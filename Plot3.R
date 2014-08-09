@@ -1,8 +1,8 @@
 # Project 1
 
 ##  Data readin and date change
-df <- read.csv("~/household_power_consumption.txt", header=T, sep=';', na.strings="?", 
-               nrows=2075259, check.names=F, stringsAsFactors=F, comment.char="", quote='\"')
+df <- read.csv("~/household_power_consumption.txt", header=T, na.strings="?", 
+               stringsAsFactors=F)
 df$Date <- as.Date(df$Date, format="%d/%m/%Y")
 
 ## Subset 
@@ -16,15 +16,11 @@ powa$Datetime <- as.POSIXct(datetime)
 
 ##################################################
 ## Plot 3
-with(powa, {
-  plot(Sub_metering_1~Datetime, type="l",
-       ylab="Global Active Power (kilowatts)", xlab="")
-  lines(Sub_metering_2~Datetime,col='Red')
-  lines(Sub_metering_3~Datetime,col='Blue')
-})
-legend("topright", col=c("black", "red", "blue"), lty=1, lwd=2, 
-       legend=c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"))
+dev.copy(png, file="plot3.png", height=500, width=500)
 
-## Saving to file
-dev.copy(png, file="plot3.png", height=480, width=480)
+plot(powa$Sub_metering_1~powa$Datetime,type="l",ylab="Energy sub metering",xlab="") 
+lines(powa$Sub_metering_2~powa$Datetime,type="l",col="red") 
+lines(powa$Sub_metering_3~powa$Datetime,type="l",col="blue") 
+legend("topright", legend=c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"), col = c("black","red","blue")
+       ,cex=0.75,lty="solid", xjust=1 )
 dev.off()
