@@ -1,8 +1,7 @@
 # Project 1
 
 ##  Data readin and date change
-df <- read.csv("~/household_power_consumption.txt", header=T, sep=';', na.strings="?", 
-               nrows=2075259, check.names=F, stringsAsFactors=F, comment.char="", quote='\"')
+df <- read.csv("~/household_power_consumption.txt", header=T, stringsAsFactors=F)
 df$Date <- as.Date(df$Date, format="%d/%m/%Y")
 
 ## Subset 
@@ -15,10 +14,10 @@ datetime <- paste(as.Date(powa$Date), powa$Time)
 powa$Datetime <- as.POSIXct(datetime)
 
 #############################################
-## Plot 1
+##Output Plot 1
+dev.copy(png, file="plot1.png", height=500, width=500)
+
 hist(powa$Global_active_power, main="Global Active Power", 
      xlab="Global Active Power (kilowatts)", ylab="Frequency", col="Red")
 
-## Saving to file
-dev.copy(png, file="plot1.png", height=480, width=480)
 dev.off()

@@ -1,11 +1,10 @@
 # Project 1
 
 ##  Data readin and date change
-df <- read.csv("~/household_power_consumption.txt", header=T, sep=';', na.strings="?", 
-               nrows=2075259, check.names=F, stringsAsFactors=F, comment.char="", quote='\"')
+df <- read.csv("~/household_power_consumption.txt", header=T, stringsAsFactors=F)
 df$Date <- as.Date(df$Date, format="%d/%m/%Y")
 
-## Subset 
+## Subsetting the data
 powa <- subset(df, subset=(Date >= "2007-02-01" & Date <= "2007-02-02"))
 rm(df)
 head(powa,2)
@@ -15,8 +14,9 @@ datetime <- paste(as.Date(powa$Date), powa$Time)
 powa$Datetime <- as.POSIXct(datetime)
 
 ######################################################
-## Plot 4
+## Output Plot 4
 dev.copy(png, file="plot4.png", height=500, width=500)
+
 par(mfrow=c(2,2), mar=c(4,4,2,1), oma=c(0,0,2,0))
 with(powa, {
   plot(Global_active_power~Datetime, type="l", 
